@@ -1,0 +1,28 @@
+{
+    "name": "ConMan",
+    "version": "1.0.0",
+    "description": "Contact Manager App using Koa React",
+    "main": "app.js",
+    "scripts": {
+        "start": "node --harmony app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mohamedrias/ConMan.git"
+    },
+    "author": "Mohamed Rias",
+    "license": "MIT",
+    "devDependencies": {
+        "browserify": "^9.0.3",
+        "gulp": "^3.8.11",
+        "reactify": "^1.0.0",
+        "vinyl-source-stream": "^1.0.0",
+        "gulp-uglify": "^1.1.0",
+        "vinyl-buffer": "^1.0.0"
+
+    },
+    "dependencies": {
+        "react": "^0.13.*",
+        "react-router": "*"
+    }
+}
