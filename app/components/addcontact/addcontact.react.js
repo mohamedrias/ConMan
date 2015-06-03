@@ -13,7 +13,6 @@ var Example = React.createClass({
     	submitted: null
     }
   }
- 
 , render: function() {
     var submitted
     if (this.state.submitted !== null) {
@@ -183,7 +182,15 @@ function $c(staticClassName, conditionalClassNames) {
 }
 
 var AddContact = React.createClass({
+  contextTypes: {
+            router: React.PropTypes.func
+        },
     
+    componentWillMount: function() {
+        if(!this.props.isAuthenticated) {
+            this.context.router.transitionTo("login");
+        }
+    },
 
     render : function() {
         var header = <header id="page-header" className="clearfix">

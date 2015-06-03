@@ -2,10 +2,7 @@
 var React = require('react');
 var SearchEl = React.createClass({
 
-  update: function(e) {
-      var keyword = this.refs.search.getDOMNode().value;
-      //console.log(this.props.keyword, keyword);
-  },
+  
   render : function() {
       return (
         <header id="page-header" className="clearfix">
@@ -13,11 +10,16 @@ var SearchEl = React.createClass({
         <form action="/app" className="search-form" method="get" role="search">
           <i className="icon-search"></i>
             <i className="icon-spinner icon-spin"></i>
-            <input type="text" ref="search" placeholder="Search contact.." onChange={this.update} className="search-field" />
+            <input type="text" ref="search" placeholder="Search contact.."  onChange={this.filter} className="search-field" />
         </form>
         </div>
         </header>
       )
+  },
+  filter: function() {
+      var keyword = this.refs.search.getDOMNode().value;
+      console.log("keyword", this.refs.search);
+      this.props.searchHandler(keyword);
   }
 });
 
