@@ -25,6 +25,7 @@
                     router: React.PropTypes.func
                 },
             componentWillMount: function() {
+                console.log(this.context.router);
                 if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
                 else

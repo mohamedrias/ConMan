@@ -46,7 +46,7 @@
                             <h4 className="nav-primary-title"><i className="icon-reorder"></i>Menu</h4>
                             <ul id="menu-primary-nav" className="menu">
                                 <li id="menu-item-31" className="menu-item">
-                                    <a href="#">About</a>
+                                    <Link to="about">About</Link>
                                 </li>
 
                                 {this._renderSpecificLinks()}

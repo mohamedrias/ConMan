@@ -19,10 +19,9 @@ var MainContent = React.createClass({
         if(!this.props.isAuthenticated) {
             this.context.router.transitionTo("login");
         }
-        console.log("Compoentn Will Mount");
     },
     componentDidMount: function() {
-        console.log("Component Did mount");  
+        //TODO: Add logic to bind events
     },
   render : function() {
       return (
