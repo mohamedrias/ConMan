@@ -56,6 +56,7 @@
             for (var i = 0, len = _users.length; i < len; i++) {
                 if (_users[i].username === user.userName && _users[i].password === user.password) {
                     _currentUser = _users[i];
+                    localStorage.setItem("_currentUser", JSON.stringify(_currentUser));
                     break;
                 }
             }
@@ -68,6 +69,7 @@
          */
         logout: function () {
             _currentUser = null;
+            localStorage.removeItem("_currentUser");
             return this.emitChange();
         },
 
@@ -97,11 +99,23 @@
         addContact: function(contact) {
             _currentUser.contacts.push(contact);   
             return this.emitChange();
+        },
+        
+        init: function() {
+            if(typeof window != undefined && typeof localStorage != undefined) {
+                if(localStorage.getItem('_currentUser')) {
+                    _currentUser = JSON.parse(localStorage.getItem("_currentUser")); 
+                    this.emitChange();
+                }
+            }   
         }
 
 
     });
-
+    
+    
+   
+    
     UsersStore.dispatchToken = AppDispatcher.register(function (payload) {
         var action = payload.action;
         switch (payload.source) {

@@ -16,6 +16,7 @@
     }
     var ContactApp = React.createClass({
             
+        
             getInitialState: function() {
                 return getAppState();
             },
@@ -23,8 +24,11 @@
                     router: React.PropTypes.func
                 },
             componentWillMount: function() {
+                UsersStore.init();
                 if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
+                else
+                    this.context.router.transitionTo("contacts");
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  
@@ -39,8 +43,10 @@
             },
             _changeHandler: function() {
                 this.setState(getAppState());
-                if(!this.state.isAuthenticated)
+                if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
+                else
+                    this.context.router.transitionTo("contacts");
             }
         });
 

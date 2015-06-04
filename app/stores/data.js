@@ -10,12 +10,14 @@ var data = {
             "firstName": "Mohamed",
             "lastName": "Rafi",
             "phoneNumber": "9789379304",
-            "email": "rafibe86@gmail.com"
+            "email": "rafibe86@gmail.com",
+            "group" : "Family"
         }, {
             "firstName": "Mustaq",
             "lastName": "Ahamed",
             "phoneNumber": "8943539482",
-            "email": "mustaqahamed@gmail.com"
+            "email": "mustaqahamed@gmail.com",
+            "group": "Friends"
         }]
     }]
 };

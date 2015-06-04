@@ -31,7 +31,7 @@
                             </div>
                             <ul className="entry-footer">
                                 <li className="entry-meta-category">
-                                    <a className="category-color-1" href="#/contacts">Family</a>
+                                    <a className="category-color-1" href="#/contacts">{contact.group}</a>
                                 </li>
                             </ul>
                            

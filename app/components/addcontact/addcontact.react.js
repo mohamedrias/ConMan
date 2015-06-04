@@ -18,24 +18,24 @@ var React = require("react"),
                     <button type="submit" className="btn btn-primary btn-block" onClick={this.handleSubmit}>Submit</button>
                 </form>
             </div>
-  }
- 
-    , handleChange: function(field, e) {
-        var nextState = {}
-        nextState[field] = e.target.checked
-        this.setState(nextState)
-      }
-
-    , handleSubmit: function(e) {
-        e.preventDefault();
-        if (this.refs.contactForm.isValid()) {
-            var contact = this.refs.contactForm.getFormData();
-            ConManActions.addContact(contact);
-            this.context.router.transitionTo("contacts");
-
         }
-      }
-})
+ 
+        , handleChange: function(field, e) {
+            var nextState = {}
+            nextState[field] = e.target.checked
+            this.setState(nextState)
+          }
+
+        , handleSubmit: function(e) {
+            e.preventDefault();
+            if (this.refs.contactForm.isValid()) {
+                var contact = this.refs.contactForm.getFormData();
+                ConManActions.addContact(contact);
+                this.context.router.transitionTo("contacts");
+
+            }
+          }
+    });
  
 /**
  * A contact form with certain optional fields.
@@ -46,6 +46,10 @@ var AddContactForm = React.createClass({
         return {
             errors: {}
         }
+    },
+    
+    getGroups: function() {
+        return ["Family", "Friends", "Colleagues"];  
     },
 
     componentDidMount: function () {
@@ -104,7 +108,8 @@ var AddContactForm = React.createClass({
             firstName: this.refs.firstName.getDOMNode().value,
             lastName: this.refs.lastName.getDOMNode().value,
             phoneNumber: this.refs.phoneNumber.getDOMNode().value,
-            email: this.refs.email.getDOMNode().value
+            email: this.refs.email.getDOMNode().value,
+            group: this.refs.group.getDOMNode().value
         }
         return data
     },
@@ -124,6 +129,7 @@ var AddContactForm = React.createClass({
                     {FormUtils.renderTextInput('lastName', 'Last Name')}
                     {FormUtils.renderTextInput('phoneNumber', 'Phone number')}
                     {FormUtils.renderTextInput('email', 'Email')}
+                    {FormUtils.renderSelect('group', 'Group', this.getGroups())}
             </div>
       }
 })

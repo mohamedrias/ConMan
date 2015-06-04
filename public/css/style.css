@@ -1493,6 +1493,7 @@ Responsive CSS
     }
     #user-nav {
         right: 10px;
+        top: 30px;
     }
     #user-nav strong i {
         margin: 0 0 0 5px;
@@ -1589,16 +1590,22 @@ Responsive CSS
 div.entry-entry {
    float: left; 
     width: 100%;
+    box-sizing: border-box;
 }
 
 div.entry-entry > span {
     float: left;
+    padding-top: 5px;
     width: 50%;
+    box-sizing: border-box;
+}
+
+span.email-field {
+      white-space: nowrap;   
 }
 
 div.entry-entry > span:last-child {
-    text-align: left;
-    padding-top: 5px;
+    text-align: right;
 }
 
 ul.entry-footer {

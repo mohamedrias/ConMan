@@ -114,24 +114,24 @@ var React = require("react"),
                     React.createElement("button", {type: "submit", className: "btn btn-primary btn-block", onClick: this.handleSubmit}, "Submit")
                 )
             )
-  }
- 
-    , handleChange: function(field, e) {
-        var nextState = {}
-        nextState[field] = e.target.checked
-        this.setState(nextState)
-      }
-
-    , handleSubmit: function(e) {
-        e.preventDefault();
-        if (this.refs.contactForm.isValid()) {
-            var contact = this.refs.contactForm.getFormData();
-            ConManActions.addContact(contact);
-            this.context.router.transitionTo("contacts");
-
         }
-      }
-})
+ 
+        , handleChange: function(field, e) {
+            var nextState = {}
+            nextState[field] = e.target.checked
+            this.setState(nextState)
+          }
+
+        , handleSubmit: function(e) {
+            e.preventDefault();
+            if (this.refs.contactForm.isValid()) {
+                var contact = this.refs.contactForm.getFormData();
+                ConManActions.addContact(contact);
+                this.context.router.transitionTo("contacts");
+
+            }
+          }
+    });
  
 /**
  * A contact form with certain optional fields.
@@ -142,6 +142,10 @@ var AddContactForm = React.createClass({displayName: "AddContactForm",
         return {
             errors: {}
         }
+    },
+    
+    getGroups: function() {
+        return ["Family", "Friends", "Colleagues"];  
     },
 
     componentDidMount: function () {
@@ -200,7 +204,8 @@ var AddContactForm = React.createClass({displayName: "AddContactForm",
             firstName: this.refs.firstName.getDOMNode().value,
             lastName: this.refs.lastName.getDOMNode().value,
             phoneNumber: this.refs.phoneNumber.getDOMNode().value,
-            email: this.refs.email.getDOMNode().value
+            email: this.refs.email.getDOMNode().value,
+            group: this.refs.group.getDOMNode().value
         }
         return data
     },
@@ -219,7 +224,8 @@ var AddContactForm = React.createClass({displayName: "AddContactForm",
                     FormUtils.renderTextInput('firstName', 'First Name'), 
                     FormUtils.renderTextInput('lastName', 'Last Name'), 
                     FormUtils.renderTextInput('phoneNumber', 'Phone number'), 
-                    FormUtils.renderTextInput('email', 'Email')
+                    FormUtils.renderTextInput('email', 'Email'), 
+                    FormUtils.renderSelect('group', 'Group', this.getGroups())
             )
       }
 })
@@ -431,6 +437,7 @@ module.exports = AddContact;
     }
     var ContactApp = React.createClass({displayName: "ContactApp",
             
+        
             getInitialState: function() {
                 return getAppState();
             },
@@ -438,8 +445,11 @@ module.exports = AddContact;
                     router: React.PropTypes.func
                 },
             componentWillMount: function() {
+                UsersStore.init();
                 if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
+                else
+                    this.context.router.transitionTo("contacts");
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  
@@ -454,8 +464,10 @@ module.exports = AddContact;
             },
             _changeHandler: function() {
                 this.setState(getAppState());
-                if(!this.state.isAuthenticated)
+                if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
+                else
+                    this.context.router.transitionTo("contacts");
             }
         });
 
@@ -496,7 +508,7 @@ module.exports = AddContact;
                             ), 
                             React.createElement("ul", {className: "entry-footer"}, 
                                 React.createElement("li", {className: "entry-meta-category"}, 
-                                    React.createElement("a", {className: "category-color-1", href: "#/contacts"}, "Family")
+                                    React.createElement("a", {className: "category-color-1", href: "#/contacts"}, contact.group)
                                 )
                             )
                            
@@ -768,12 +780,14 @@ var data = {
             "firstName": "Mohamed",
             "lastName": "Rafi",
             "phoneNumber": "9789379304",
-            "email": "rafibe86@gmail.com"
+            "email": "rafibe86@gmail.com",
+            "group" : "Family"
         }, {
             "firstName": "Mustaq",
             "lastName": "Ahamed",
             "phoneNumber": "8943539482",
-            "email": "mustaqahamed@gmail.com"
+            "email": "mustaqahamed@gmail.com",
+            "group": "Friends"
         }]
     }]
 };
@@ -839,6 +853,7 @@ module.exports = data;
             for (var i = 0, len = _users.length; i < len; i++) {
                 if (_users[i].username === user.userName && _users[i].password === user.password) {
                     _currentUser = _users[i];
+                    localStorage.setItem("_currentUser", JSON.stringify(_currentUser));
                     break;
                 }
             }
@@ -851,6 +866,7 @@ module.exports = data;
          */
         logout: function () {
             _currentUser = null;
+            localStorage.removeItem("_currentUser");
             return this.emitChange();
         },
 
@@ -880,11 +896,23 @@ module.exports = data;
         addContact: function(contact) {
             _currentUser.contacts.push(contact);   
             return this.emitChange();
+        },
+        
+        init: function() {
+            if(typeof window != undefined && typeof localStorage != undefined) {
+                if(localStorage.getItem('_currentUser')) {
+                    _currentUser = JSON.parse(localStorage.getItem("_currentUser")); 
+                    this.emitChange();
+                }
+            }   
         }
 
 
     });
-
+    
+    
+   
+    
     UsersStore.dispatchToken = AppDispatcher.register(function (payload) {
         var action = payload.action;
         switch (payload.source) {
