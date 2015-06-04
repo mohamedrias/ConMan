@@ -12,6 +12,7 @@
         /**
         *   Internal variable for managing the stubbed users
         **/
+        //TODO: Remove the stubbed value and fetch it from server
         _users = data.Users,
         _currentUser = null;
 

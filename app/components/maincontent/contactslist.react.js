@@ -25,12 +25,16 @@
                                 <a className="ht-entry-open" rel="bookmark">{contact.firstName+ " "+contact.lastName}</a>
                                 <a href="#" className="entry-permalink"><i className="icon-link"></i></a>
                             </h2>
-                            <ul className="entry-meta">
-                                <li>Category </li>
+                             <div className="entry-entry">
+                                <span><i className="icon-phone"></i> {contact.phoneNumber}</span>
+                                <span className="email-field"><i className="icon-envelope"></i> {contact.email}</span>
+                            </div>
+                            <ul className="entry-footer">
                                 <li className="entry-meta-category">
                                     <a className="category-color-1" href="#/contacts">Family</a>
                                 </li>
                             </ul>
+                           
                         </header>
                     </div>
                 </article>)

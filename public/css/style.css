@@ -1116,7 +1116,7 @@ Content
     color: #999;
     font-size: 14px;
     text-align: right;
-    margin: 10px 0 30px;
+    margin: 10px 5px;
 }
 
 .hentry .entry-footer a {
@@ -1284,7 +1284,7 @@ Content
 /* Entry Categories */
 
 .entry-meta-category:before {
-    content: "/";
+    /*content: "/";*/
     margin: 0 6px 0 0;
 }
 /* Entry Content */
@@ -1584,4 +1584,28 @@ Responsive CSS
 .error-message {
     color: #a94442;
     text-align: left;
+}
+
+div.entry-entry {
+   float: left; 
+    width: 100%;
+}
+
+div.entry-entry > span {
+    float: left;
+    width: 50%;
+}
+
+div.entry-entry > span:last-child {
+    text-align: left;
+    padding-top: 5px;
+}
+
+ul.entry-footer {
+    list-style: none;
+    float: right;
+    margin: 0px 0 4px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }

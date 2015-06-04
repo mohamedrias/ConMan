@@ -490,12 +490,16 @@ module.exports = AddContact;
                                 React.createElement("a", {className: "ht-entry-open", rel: "bookmark"}, contact.firstName+ " "+contact.lastName), 
                                 React.createElement("a", {href: "#", className: "entry-permalink"}, React.createElement("i", {className: "icon-link"}))
                             ), 
-                            React.createElement("ul", {className: "entry-meta"}, 
-                                React.createElement("li", null, "Category "), 
+                             React.createElement("div", {className: "entry-entry"}, 
+                                React.createElement("span", null, React.createElement("i", {className: "icon-phone"}), " ", contact.phoneNumber), 
+                                React.createElement("span", {className: "email-field"}, React.createElement("i", {className: "icon-envelope"}), " ", contact.email)
+                            ), 
+                            React.createElement("ul", {className: "entry-footer"}, 
                                 React.createElement("li", {className: "entry-meta-category"}, 
                                     React.createElement("a", {className: "category-color-1", href: "#/contacts"}, "Family")
                                 )
                             )
+                           
                         )
                     )
                 ))
@@ -791,6 +795,7 @@ module.exports = data;
         /**
         *   Internal variable for managing the stubbed users
         **/
+        //TODO: Remove the stubbed value and fetch it from server
         _users = data.Users,
         _currentUser = null;
 
