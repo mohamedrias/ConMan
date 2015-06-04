@@ -15,25 +15,25 @@ Contacts Manager app built using Koa and React
 
 ## How to execute?
 
-1. Run `npm start`
-
-visit http://localhost:3000
+1. Run `npm start` and visit http://localhost:3000
 
 2. For building the react components
 
-`npm run build`
+    `npm run build`
 
 3. Development commands
 
-`npm run dev` 
+    `npm run dev` 
 
-Runs nodemon instance
+    Runs nodemon instance
 
-`npm run watch`
+    `npm run watch`
 
-Runs gulp watch command for bundling react components
+    Runs gulp watch command for bundling react components
 
 ## Login details
+
+Currently registration feature is not there. So use below credentials to login
 
 username: mohamedrias
 
