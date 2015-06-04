@@ -22,14 +22,17 @@
                 return getAppState();
             },
             contextTypes: {
-                    router: React.PropTypes.func
+                    router: React.PropTypes.func,
+                    routeDepth: React.PropTypes.func
                 },
             componentWillMount: function() {
-                console.log(this.context.router);
-                if(!UsersStore.isLoggedIn())
+                var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
+                if(!UsersStore.isLoggedIn()) {
                     this.context.router.transitionTo("login");
-                else
-                    this.context.router.transitionTo("contacts");
+                } else {
+                    currentRoute = currentRoute==="login"? "contacts" : currentRoute;
+                    this.context.router.transitionTo(currentRoute);
+                }
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  

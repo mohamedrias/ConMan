@@ -17,7 +17,7 @@
                                 <h2>Welcome to ConMan!</h2>
                                 <blockquote>It's a contact manager app built using KOA & React</blockquote>
                                 <div>
-                                    Currently there is no registration feature available. Please use the following credentials to login and test tha application.
+                                    Currently there is no registration feature available. Please use the following credentials to login and test the application.
                                     <br></br>
                                     <p>username: mohamedrias</p>
                                     <p>Password: baba</p>

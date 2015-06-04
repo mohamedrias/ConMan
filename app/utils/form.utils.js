@@ -72,6 +72,7 @@
             })
             return this.renderField(id, label, radios)
           },
+        
         /**
          * Render the input field within a form-group
          * @param   {String} id    ref id to the element

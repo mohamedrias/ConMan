@@ -446,14 +446,17 @@ module.exports = AddContact;
                 return getAppState();
             },
             contextTypes: {
-                    router: React.PropTypes.func
+                    router: React.PropTypes.func,
+                    routeDepth: React.PropTypes.func
                 },
             componentWillMount: function() {
-                console.log(this.context.router);
-                if(!UsersStore.isLoggedIn())
+                var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
+                if(!UsersStore.isLoggedIn()) {
                     this.context.router.transitionTo("login");
-                else
-                    this.context.router.transitionTo("contacts");
+                } else {
+                    currentRoute = currentRoute==="login"? "contacts" : currentRoute;
+                    this.context.router.transitionTo(currentRoute);
+                }
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  
@@ -629,7 +632,7 @@ module.exports = SearchEl;
                                 React.createElement("h2", null, "Welcome to ConMan!"), 
                                 React.createElement("blockquote", null, "It's a contact manager app built using KOA & React"), 
                                 React.createElement("div", null, 
-                                    "Currently there is no registration feature available. Please use the following credentials to login and test tha application.", 
+                                    "Currently there is no registration feature available. Please use the following credentials to login and test the application.", 
                                     React.createElement("br", null), 
                                     React.createElement("p", null, "username: mohamedrias"), 
                                     React.createElement("p", null, "Password: baba")
@@ -1092,6 +1095,7 @@ module.exports = data;
             })
             return this.renderField(id, label, radios)
           },
+        
         /**
          * Render the input field within a form-group
          * @param   {String} id    ref id to the element
@@ -1126,6 +1130,7 @@ module.exports = data;
         NUMERIC: /^[0-9]+$/,
         INTEGER: /^\-?[0-9]+$/,
         DECIMAL: /^\-?[0-9]*\.?[0-9]+$/,
+        // Got EMAIL regex from SO
         EMAIL: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
         ALPHA: /^[a-z]+$/i,
         PHONE: /^(?:\+)?(?:0)?(?:91)?[789]\d{9}$/gi
