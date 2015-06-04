@@ -11,7 +11,7 @@ gulp.task('browserify', function () {
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(gulp.dest('./app/public/build/'));
+    .pipe(gulp.dest('./public/build/'));
 });
 
 gulp.task('watch', function () {

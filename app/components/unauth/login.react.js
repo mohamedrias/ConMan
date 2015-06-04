@@ -1,10 +1,99 @@
 (function() {
    "use strict";
     
-    var React = require("react");
-    var Router = require("react-router");
-    var Route = Router.Route,
-        Link = Router.Link;
+    var React = require("react"),
+        Router = require("react-router"),
+        Route = Router.Route,
+        Link = Router.Link,
+        LoginActionHandler = require("./../../actions/login.action"),
+        UsersStore = require("./../../stores/users.stores"),
+        LoginAction = require("./../../actions/login.action"),
+        FormUtils = require("./../../utils/form.utils"),
+        ValidatorUtils = require("./../../utils/validator.utils");
+        
+    var LoginForm = React.createClass({
+        
+        getInitialState: function() {
+            return { error: []}
+        },
+        contextTypes: {
+            router: React.PropTypes.func
+        },
+        validatorRules : function() {
+            return [
+              {
+                "field": "userName",
+                "required": true,
+                "min": 4,
+                "max": 15,
+                'label' : 'username'
+              },
+              {
+                "field": "password",
+                "required": true,
+                "min": 4,
+                'max' : 13,
+                'label': 'password'
+              }
+            ]
+        },
+        componentDidMount: function() {
+            this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(self, 'userName'));
+            this.refs.password.getDOMNode().addEventListener("input", this.removeError.bind(self, 'password'));
+        },
+        render: function() {
+            return (
+                
+                <div id="content" className="animated fadeInUp">
+                    <form onSubmit={this.login} ref="loginForm">
+                        <div className="form-horizontal">
+                          {FormUtils.renderTextInput('userName', 'username')}
+                          {FormUtils.renderPasswordInput('password', 'password')}
+                        </div>
+                        <div className="form-group has-error" ref="errorMessage">
+                        </div>
+                        <button type="submit" className="btn btn-primary btn-block" onClick={this.login}>Login</button>
+                    </form>
+                </div>
+            );
+        },
+        login: function(e) {
+            e.preventDefault();
+            var errors = [];
+            this.setState({error : []});   
+            var username = this.refs.userName.getDOMNode().value.trim(),
+                password = this.refs.password.getDOMNode().value.trim();
+            errors = ValidatorUtils.validate(this.validatorRules(), this);
+            if(errors.length > 0) {
+                this.setState({error : errors});  
+                errors.forEach(function(error) {
+                    this.addError(error);
+                }.bind(this));
+                return;
+            } else {
+                this.validatorRules().forEach(function(rule) {
+                    this.removeError(rule.field);
+                }.bind(this));
+                LoginAction.login(username, password);
+                if(UsersStore.isLoggedIn()) {
+                    this.context.router.transitionTo("contacts");
+                } else {
+                    this.refs.errorMessage.getDOMNode().textContent = 'Invalid Username/Password';
+                }
+            }
+        },
+        addError: function(error) {
+            var errorDOM = this.refs[error.field+"-error"].getDOMNode();
+            errorDOM.textContent = error.error;
+            errorDOM.parentNode.classList.add("has-error");
+        },
+        removeError: function(ref, ele) {
+            var errorDOM = this.refs[ref+"-error"].getDOMNode();
+            errorDOM.textContent = "";
+            errorDOM.parentNode.classList.remove("has-error");
+        }
+    });
+    
     var Login = React.createClass({
         contextTypes: {
             router: React.PropTypes.func
@@ -23,15 +112,11 @@
         return (
                 <section id="primary" className="clearfix ">
                     {header}
-                    <div id="content" className="animated fadeInUp">
-                        <button type="button" className="btn btn-primary btn-block" onClick={this.login}>Login</button>
-                    </div>
+                    <LoginForm/>
                 </section>
             );   
-        },
-        login: function() {
-            this.props.login(true);
         }
+        
     });
     module.exports = Login;
 })();

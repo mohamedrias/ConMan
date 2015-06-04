@@ -4,7 +4,7 @@ var data = {
         "lastName": "Rias",
         "phoneNumber": "8870431316",
         "username": "mohamedrias",
-        "password": "babajob",
+        "password": "baba",
         "email": "mohamedrias@gmail.com",
         contacts: [{
             "firstName": "Mohamed",

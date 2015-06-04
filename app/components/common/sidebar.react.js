@@ -3,8 +3,9 @@
     var React = require("react"),
         Router = require("react-router"),
         RouteHandler = Router.RouteHandler,
-        Link = Router.Link;
-
+        Link = Router.Link,
+        LoginAction = require("./../../actions/login.action");
+    
     var UserProfile = React.createClass({
         render : function() {
             return (
@@ -22,7 +23,17 @@
 
 
     var NavMenu = React.createClass({
-        componentWillMount: function() {
+        componentDidMount: function() {
+            document.querySelector("#mobile-nav-toggle").addEventListener("click", function(event) {
+                event.preventDefault();
+                var ulEle = document.querySelector("#nav-mobile");
+                if(!ulEle.style.display || ulEle.style.display=='none') {
+                    ulEle.style.display = "block";   
+                }
+                else {
+                    ulEle.style.display = "none";
+                }
+            });
         },
 
         render: function() {
@@ -71,7 +82,7 @@
                 }
             },
         logout: function() {
-            this.props.logout();
+            LoginAction.logout();
         }
     });
 
@@ -87,7 +98,7 @@
                             { this.props.isAuthenticated?
                               <UserProfile fullName={this.getFullName()}/> : null
                             }
-                              <NavMenu isAuthenticated={this.props.isAuthenticated} logout={this.props.logout.bind(null, this)}/>
+                              <NavMenu isAuthenticated={this.props.isAuthenticated}/>
                             </div>
                         )
                 }

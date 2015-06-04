@@ -9,7 +9,7 @@
             <div id="content">
               {
                 this.props.contacts.map(function(contact) {
-                    return (<article className="clearfix animated fadeInUp hentry">
+                    return (<article className="clearfix animated fadeInUp hentry" key={contact.firstname}>
                     <div className="gravatar">
                         <a href="#user">
                             <img alt="" 

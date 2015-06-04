@@ -4,7 +4,10 @@
     "description": "Contact Manager App using Koa React",
     "main": "app.js",
     "scripts": {
-        "start": "node --harmony app.js"
+        "start": "node --harmony server.js",
+        "build": "gulp build",
+        "dev": "nodemon --harmony server.js",
+        "watch": "gulp default"
     },
     "repository": {
         "type": "git",
@@ -18,11 +21,17 @@
         "reactify": "^1.0.0",
         "vinyl-source-stream": "^1.0.0",
         "gulp-uglify": "^1.1.0",
-        "vinyl-buffer": "^1.0.0"
-
+        "vinyl-buffer": "^1.0.0",
+        "nodemon": "*"
     },
     "dependencies": {
         "react": "^0.13.*",
-        "react-router": "*"
+        "flux": "*",
+        "react-router": "*",
+        "underscore": "*",
+        "koa": "*",
+        "koa-router": "*",
+        "koa-static": "*",
+        "koa-middlewares": "*"
     }
 }

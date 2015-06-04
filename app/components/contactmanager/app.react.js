@@ -4,43 +4,43 @@
         MainContent = require("./../maincontent/maincontent.react"),
         Router = require("react-router"),
         RouteHandler = Router.RouteHandler,
-        Header = require("./../common/header.react"),
-        Users = require("./../../stores/data").Users,
-        UserProfile = Users[0],
+        Header = require("./../common/header.react");
+    
+    var UsersStore = require("./../../stores/users.stores");
         
-        ContactApp = React.createClass({
+    var getAppState = function() {
+        return {
+                    isAuthenticated: UsersStore.isLoggedIn(),
+                    userProfile : UsersStore.getUserProfile()
+                }   
+    }
+    var ContactApp = React.createClass({
+            
             getInitialState: function() {
-                return {
-                    isAuthenticated: false,
-                    userProfile : UserProfile
-                }
+                return getAppState();
             },
             contextTypes: {
                     router: React.PropTypes.func
                 },
+            componentWillMount: function() {
+                if(!UsersStore.isLoggedIn())
+                    this.context.router.transitionTo("login");
+            },
+            componentDidMount: function() {
+                UsersStore.addChangeListener(this._changeHandler);  
+            },
             render: function() { 
                 return (
                     <div id="site-container" className="clearfix">
-                        <Header userProfile={this.state.userProfile} isAuthenticated={this.state.isAuthenticated} logout={this.logout}/>
-                        <RouteHandler userProfile={this.state.userProfile} login={this.login} isAuthenticated={this.state.isAuthenticated}  logout={this.logout}/> 
+                        <Header userProfile={this.state.userProfile} isAuthenticated={this.state.isAuthenticated}/>
+                        <RouteHandler userProfile={this.state.userProfile} isAuthenticated={this.state.isAuthenticated}/> 
                     </div>
                 ); 
             },
-            login: function(loggedIn) {
-                if(true) {
-                    this.setState({
-                        isAuthenticated: true,
-                        userProfile: UserProfile
-                    });
-                    this.context.router.transitionTo("contacts");
-                }
-            },
-            logout: function() {
-                this.setState({
-                    isAuthenticated: false,
-                    userProfile: undefined
-                });   
-                this.context.router.transitionTo("login");
+            _changeHandler: function() {
+                this.setState(getAppState());
+                if(!this.state.isAuthenticated)
+                    this.context.router.transitionTo("login");
             }
         });
 

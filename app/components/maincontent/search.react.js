@@ -18,7 +18,6 @@ var SearchEl = React.createClass({
   },
   filter: function() {
       var keyword = this.refs.search.getDOMNode().value;
-      console.log("keyword", this.refs.search);
       this.props.searchHandler(keyword);
   }
 });

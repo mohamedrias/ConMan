@@ -5,8 +5,9 @@ var ContactsList = require("./contactslist.react");
 
 var MainContent = React.createClass({
    getInitialState: function() {
-        return {
-            contacts: this.props.userProfile.contacts
+
+       return {
+            contacts: this.props.userProfile && this.props.userProfile.contacts || []
         }
    },
 
@@ -18,8 +19,11 @@ var MainContent = React.createClass({
         if(!this.props.isAuthenticated) {
             this.context.router.transitionTo("login");
         }
+        console.log("Compoentn Will Mount");
     },
-    
+    componentDidMount: function() {
+        console.log("Component Did mount");  
+    },
   render : function() {
       return (
         <section id="primary" className="clearfix">

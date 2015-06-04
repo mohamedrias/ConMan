@@ -26,3 +26,4 @@ var routes = (
 Router.run(routes, function (Handler) {
   React.render(<Handler/>, document.querySelector('body'));
 });
+module.exports = ConMan;
