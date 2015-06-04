@@ -37,6 +37,9 @@
               }
             ]
         },
+        componentWillMount: function() {
+           
+        },
         componentDidMount: function() {
             this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(self, 'userName'));
             this.refs.password.getDOMNode().addEventListener("input", this.removeError.bind(self, 'password'));

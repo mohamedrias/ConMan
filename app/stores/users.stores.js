@@ -7,6 +7,7 @@
         _ = require('underscore'),
         CHANGE_EVENT = 'change',
         LOGGEDOUT_EVENT = "unauthorized",
+        LOCALSTORAGE_KEY = "_currentUser",
         
         
         /**
@@ -14,9 +15,37 @@
         **/
         //TODO: Remove the stubbed value and fetch it from server
         _users = data.Users,
-        _currentUser = null;
-
-    var APPCONSTANTS = require("./../constants/conman.constants");
+        _currentUser = null,
+        
+        
+        APPCONSTANTS = require("./../constants/conman.constants"),
+        
+        /**
+         * Method to update the LocalStorage
+         */
+        updateLocalStorage = function() {
+            localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(_currentUser));   
+        },
+        
+        /**
+         * Helper Method to get the localStorage data
+         * @returns {Object} localStorage currentUser data
+         */
+        getLocalStorageData = function() {
+            if(localStorage.getItem(LOCALSTORAGE_KEY))
+                return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+        },
+        
+        /**
+         * Removes localStorage data
+         */
+        removeLocalStorageData = function() {
+            localStorage.removeItem(LOCALSTORAGE_KEY);  
+        };
+        
+    
+    
+    
 
     /**
     *   Super charging our User Store with EventEmitter eventing functionality
@@ -56,7 +85,7 @@
             for (var i = 0, len = _users.length; i < len; i++) {
                 if (_users[i].username === user.userName && _users[i].password === user.password) {
                     _currentUser = _users[i];
-                    localStorage.setItem("_currentUser", JSON.stringify(_currentUser));
+                    updateLocalStorage();
                     break;
                 }
             }
@@ -69,7 +98,7 @@
          */
         logout: function () {
             _currentUser = null;
-            localStorage.removeItem("_currentUser");
+            removeLocalStorageData();
             return this.emitChange();
         },
 
@@ -98,15 +127,13 @@
          */
         addContact: function(contact) {
             _currentUser.contacts.push(contact);   
+            updateLocalStorage();
             return this.emitChange();
         },
         
         init: function() {
             if(typeof window != undefined && typeof localStorage != undefined) {
-                if(localStorage.getItem('_currentUser')) {
-                    _currentUser = JSON.parse(localStorage.getItem("_currentUser")); 
-                    this.emitChange();
-                }
+                _currentUser = getLocalStorageData();
             }   
         }
 

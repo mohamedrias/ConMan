@@ -9,6 +9,7 @@
     var UsersStore = require("./../../stores/users.stores");
         
     var getAppState = function() {
+        UsersStore.init();
         return {
                     isAuthenticated: UsersStore.isLoggedIn(),
                     userProfile : UsersStore.getUserProfile()
@@ -24,7 +25,6 @@
                     router: React.PropTypes.func
                 },
             componentWillMount: function() {
-                UsersStore.init();
                 if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
                 else

@@ -430,6 +430,7 @@ module.exports = AddContact;
     var UsersStore = require("./../../stores/users.stores");
         
     var getAppState = function() {
+        UsersStore.init();
         return {
                     isAuthenticated: UsersStore.isLoggedIn(),
                     userProfile : UsersStore.getUserProfile()
@@ -445,7 +446,6 @@ module.exports = AddContact;
                     router: React.PropTypes.func
                 },
             componentWillMount: function() {
-                UsersStore.init();
                 if(!UsersStore.isLoggedIn())
                     this.context.router.transitionTo("login");
                 else
@@ -528,9 +528,9 @@ module.exports = AddContact;
 
 },{"react":217}],10:[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react');
-var SearchEl = require("./search.react");
-var ContactsList = require("./contactslist.react");
+var React = require('react'),
+    SearchEl = require("./search.react")
+    ContactsList = require("./contactslist.react");
 
 var MainContent = React.createClass({displayName: "MainContent",
    getInitialState: function() {
@@ -645,6 +645,9 @@ module.exports = SearchEl;
                 'label': 'password'
               }
             ]
+        },
+        componentWillMount: function() {
+           
         },
         componentDidMount: function() {
             this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(self, 'userName'));
@@ -804,6 +807,7 @@ module.exports = data;
         _ = require('underscore'),
         CHANGE_EVENT = 'change',
         LOGGEDOUT_EVENT = "unauthorized",
+        LOCALSTORAGE_KEY = "_currentUser",
         
         
         /**
@@ -811,9 +815,37 @@ module.exports = data;
         **/
         //TODO: Remove the stubbed value and fetch it from server
         _users = data.Users,
-        _currentUser = null;
-
-    var APPCONSTANTS = require("./../constants/conman.constants");
+        _currentUser = null,
+        
+        
+        APPCONSTANTS = require("./../constants/conman.constants"),
+        
+        /**
+         * Method to update the LocalStorage
+         */
+        updateLocalStorage = function() {
+            localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(_currentUser));   
+        },
+        
+        /**
+         * Helper Method to get the localStorage data
+         * @returns {Object} localStorage currentUser data
+         */
+        getLocalStorageData = function() {
+            if(localStorage.getItem(LOCALSTORAGE_KEY))
+                return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+        },
+        
+        /**
+         * Removes localStorage data
+         */
+        removeLocalStorageData = function() {
+            localStorage.removeItem(LOCALSTORAGE_KEY);  
+        };
+        
+    
+    
+    
 
     /**
     *   Super charging our User Store with EventEmitter eventing functionality
@@ -853,7 +885,7 @@ module.exports = data;
             for (var i = 0, len = _users.length; i < len; i++) {
                 if (_users[i].username === user.userName && _users[i].password === user.password) {
                     _currentUser = _users[i];
-                    localStorage.setItem("_currentUser", JSON.stringify(_currentUser));
+                    updateLocalStorage();
                     break;
                 }
             }
@@ -866,7 +898,7 @@ module.exports = data;
          */
         logout: function () {
             _currentUser = null;
-            localStorage.removeItem("_currentUser");
+            removeLocalStorageData();
             return this.emitChange();
         },
 
@@ -895,15 +927,13 @@ module.exports = data;
          */
         addContact: function(contact) {
             _currentUser.contacts.push(contact);   
+            updateLocalStorage();
             return this.emitChange();
         },
         
         init: function() {
             if(typeof window != undefined && typeof localStorage != undefined) {
-                if(localStorage.getItem('_currentUser')) {
-                    _currentUser = JSON.parse(localStorage.getItem("_currentUser")); 
-                    this.emitChange();
-                }
+                _currentUser = getLocalStorageData();
             }   
         }
 

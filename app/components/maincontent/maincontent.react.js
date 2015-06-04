@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
-var React = require('react');
-var SearchEl = require("./search.react");
-var ContactsList = require("./contactslist.react");
+var React = require('react'),
+    SearchEl = require("./search.react")
+    ContactsList = require("./contactslist.react");
 
 var MainContent = React.createClass({
    getInitialState: function() {
