@@ -102,22 +102,13 @@ var React = require("react"),
     AddContactPlaceHolder = React.createClass({displayName: "AddContactPlaceHolder",
         getInitialState: function () {
            return {
-               submitted: null
            }
        },
        contextTypes: {
            router: React.PropTypes.func
        }
         ,render: function() {
-        var submitted;
-        if (this.state.submitted !== null) {
-          submitted = React.createElement("div", {className: "alert alert-success"}, 
-            React.createElement("p", null, "ContactForm data:"), 
-            React.createElement("pre", null, React.createElement("code", null, JSON.stringify(this.state.submitted, null, '  ')))
-          )
-        }
- 
-    return React.createElement("div", null, 
+            return React.createElement("div", null, 
                 React.createElement("form", {onSubmit: this.handleSubmit}, 
                     React.createElement(AddContactForm, {ref: "contactForm"}), 
                     React.createElement("button", {type: "submit", className: "btn btn-primary btn-block", onClick: this.handleSubmit}, "Submit")
@@ -147,7 +138,7 @@ var React = require("react"),
  */
 var AddContactForm = React.createClass({displayName: "AddContactForm",
   
-  getInitialState: function () {
+    getInitialState: function () {
         return {
             errors: {}
         }
@@ -1029,6 +1020,9 @@ module.exports = data;
 (function () {
     "use strict";
 
+    /**
+    *   Reusable common REGEX rules
+    */
     var REGEXRULES = {
         NUMERIC: /^[0-9]+$/,
         INTEGER: /^\-?[0-9]+$/,

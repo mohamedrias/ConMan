@@ -1,6 +1,9 @@
 (function () {
     "use strict";
 
+    /**
+    *   Reusable common REGEX rules
+    */
     var REGEXRULES = {
         NUMERIC: /^[0-9]+$/,
         INTEGER: /^\-?[0-9]+$/,

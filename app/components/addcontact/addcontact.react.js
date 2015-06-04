@@ -6,22 +6,13 @@ var React = require("react"),
     AddContactPlaceHolder = React.createClass({
         getInitialState: function () {
            return {
-               submitted: null
            }
        },
        contextTypes: {
            router: React.PropTypes.func
        }
         ,render: function() {
-        var submitted;
-        if (this.state.submitted !== null) {
-          submitted = <div className="alert alert-success">
-            <p>ContactForm data:</p>
-            <pre><code>{JSON.stringify(this.state.submitted, null, '  ')}</code></pre>
-          </div>
-        }
- 
-    return <div>
+            return <div>
                 <form onSubmit={this.handleSubmit}>
                     <AddContactForm ref="contactForm" />
                     <button type="submit" className="btn btn-primary btn-block" onClick={this.handleSubmit}>Submit</button>
@@ -51,7 +42,7 @@ var React = require("react"),
  */
 var AddContactForm = React.createClass({
   
-  getInitialState: function () {
+    getInitialState: function () {
         return {
             errors: {}
         }
