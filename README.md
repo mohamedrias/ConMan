@@ -10,6 +10,8 @@ Contacts Manager app built using Koa and React
 6. Setup stores api for removing and editing contacts
 7. Add grouping functionality in adding contacts
 8. Improve search & filtering functionality
+9. Add localStorage atleast for data persistance
+10. Setup registration page
 
 ## How to execute?
 
@@ -30,3 +32,8 @@ Runs nodemon instance
 `npm run watch`
 
 Runs gulp watch command for bundling react components
+
+## Login details
+
+username: mohamedrias
+password: baba
