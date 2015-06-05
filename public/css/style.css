@@ -840,7 +840,7 @@ Navigation
 #nav-primary .nav-primary-title {
     color: #303B4A;
     margin: 0 0 10px;
-    padding: 0 20px;
+    padding: 15px 20px 0;
     font-size: 18px;
     font-weight: 600;
 }
