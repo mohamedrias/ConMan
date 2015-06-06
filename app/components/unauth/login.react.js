@@ -47,8 +47,14 @@
         },
         componentDidMount: function() {
             //TODO: replace with document.querySelector
-            this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(self, 'userName'));
-            this.refs.password.getDOMNode().addEventListener("input", this.removeError.bind(self, 'password'));
+            this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(null, 'userName'));
+            this.refs.password.getDOMNode().addEventListener("input", this.removeError.bind(null, 'password'));
+            this.refs.loginButton.getDOMNode().addEventListener('click', this.login);
+        },
+        componentWillUnmount: function() {
+            this.refs.userName.getDOMNode().removeEventListener("input", this.removeError.bind(null, 'userName'));
+            this.refs.password.getDOMNode().removeEventListener("input", this.removeError.bind(null, 'password'));
+            this.refs.loginButton.getDOMNode().removeEventListener('click', this.login);
         },
         render: function() {
             return (
@@ -61,7 +67,7 @@
                         </div>
                         <div className="form-group has-error" ref="errorMessage">
                         </div>
-                        <button type="submit" className="btn btn-primary btn-block" onClick={this.login}>Login</button>
+                        <button type="submit" ref="loginButton" className="btn btn-primary btn-block" >Login</button>
                     </form>
                 </div>
             );

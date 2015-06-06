@@ -14,29 +14,29 @@
             return this.renderField(id, label,
                 <input type="text" className="form-control" id={id} ref={id}/>
             )
-        }
+        },
          /**
          * Render the input password field with masked
          * @param   {String} id    ref id to the element
          * @param   {String} label Label message to show for the field
          * @returns {JSX}    JSX template for input field
          */
-        , renderPasswordInput: function(id, label) {
+        renderPasswordInput: function(id, label) {
             return this.renderField(id, label,
                 <input type="password" className="form-control" id={id} ref={id}/>
             )
-        }
+        },
          /**
          * Render the input textarea field
          * @param   {String} id    ref id to the element
          * @param   {String} label Label message to show for the field
          * @returns {JSX}    JSX template for input field
          */
-        , renderTextarea: function(id, label) {
+         renderTextarea: function(id, label) {
             return this.renderField(id, label,
               <textarea className="form-control" id={id} ref={id}/>
             )
-          }
+          },
 
          /**
          * Render the input select field
@@ -45,16 +45,16 @@
          * @param   {Array}  Data  Source
          * @returns {JSX}    JSX template for input field
          */
-        , renderSelect: function(id, label, values) {
-            var options = values.map(function(value) {
-              return <option value={value}>{value}</option>
+        renderSelect: function(id, label, values) {
+            var options = values.map(function(value, index) {
+              return <option value={value} key={value+''+index}>{value}</option>
             })
             return this.renderField(id, label,
               <select className="form-control" id={id} ref={id}>
                 {options}
               </select>
             )
-          }
+          },
          /**
          * Render the input radio buttons field
          * @param   {String} id    ref id to the element
@@ -62,7 +62,7 @@
          * @param   {Array}  kwargs  Source
          * @returns {JSX}    JSX template for input field
          */
-        , renderRadioInlines: function(id, label, kwargs) {
+         renderRadioInlines: function(id, label, kwargs) {
             var radios = kwargs.values.map(function(value) {
               var defaultChecked = (value == kwargs.defaultCheckedValue)
               return <label className="radio-inline">
@@ -72,7 +72,24 @@
             })
             return this.renderField(id, label, radios)
           },
-        
+        /**
+         * Render the buttons field
+         * @param   {String} id         ref id to the element
+         * @param   {String} label      Label message to show for the field
+         * @param   {String} classNames List of classname
+         * @param   {String} type       type of button    
+         * @returns {JSX}    JSX template for button field
+         */
+        renderButtonBlock : function(id, type, classNames, label) {
+            var button = <button type={type} className={classNames} ref={id}>{label}</button>;
+            return(
+                <div className='form-group'>
+                    <div className="col-sm-8">
+                        {button}
+                    </div>
+                </div>
+            );
+        },
         /**
          * Render the input field within a form-group
          * @param   {String} id    ref id to the element

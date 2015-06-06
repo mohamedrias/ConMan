@@ -9,6 +9,8 @@
         LOGGEDOUT_EVENT = "unauthorized",
         LOCALSTORAGE_KEY = "_currentUser",
         
+        ConManUtils = require("./../utils/conman.utils"),
+        
         
         /**
         *   Internal variable for managing the stubbed users
@@ -126,6 +128,7 @@
          * @returns {event}  Event emitter
          */
         addContact: function(contact) {
+            contact._id = ConManUtils.generateId();
             _currentUser.contacts.push(contact);   
             updateLocalStorage();
             return this.emitChange();

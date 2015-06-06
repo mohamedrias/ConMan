@@ -24,7 +24,7 @@
             },
             contextTypes: {
                     router: React.PropTypes.func,
-                    routeDepth: React.PropTypes.func
+                    routeDepth: React.PropTypes.number
                 },
             componentWillMount: function() {
                 // Logic to reroute to previous state if the user is logged in
@@ -38,6 +38,9 @@
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  
+            },
+            componentWillUnmount: function() {
+                UsersStore.removeChangeListener(this._changeHandler);  
             },
             render: function() { 
                 return (

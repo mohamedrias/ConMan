@@ -7,8 +7,8 @@
               return (
                 <div id="content">
                   {
-                    this.props.contacts.map(function(contact) {
-                        return (<article className="clearfix animated fadeInUp hentry" key={contact.firstname}>
+                    this.props.contacts.map(function(contact, index) {
+                        return (<article className="clearfix animated fadeInUp hentry" key={contact.firstname+""+index}>
                         <div className="gravatar">
                             <a href="#user">
                                 <img alt="" 
