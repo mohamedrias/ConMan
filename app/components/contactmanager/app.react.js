@@ -4,7 +4,10 @@
     var React = require("react"),
         MainContent = require("./../maincontent/maincontent.react"),
         Router = require("react-router"),
+        Route = Router.Route,
+        DefaultRoute = Router.DefaultRoute,
         RouteHandler = Router.RouteHandler,
+        Link = Router.Link,
         Header = require("./../common/header.react");
     
     var UsersStore = require("./../../stores/users.stores");
@@ -27,14 +30,28 @@
                     routeDepth: React.PropTypes.number
                 },
             componentWillMount: function() {
-                // Logic to reroute to previous state if the user is logged in
-                var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
-                if(!UsersStore.isLoggedIn()) {
-                    this.context.router.transitionTo("login");
-                } else {
-                    currentRoute = currentRoute==="login"? "contacts" : currentRoute;
-                    this.context.router.transitionTo(currentRoute);
+                var self = this;
+                /**
+                 * Universal Error handler for the app
+                 */
+                if(typeof window !== "undefined") {
+                    window.onerror = function() {
+                        self.context.router.transitionTo("error");
+                    };
                 }
+
+                // Logic to reroute to previous state if the user is logged in
+                if(this.context.router) {
+                    var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
+                    if(!UsersStore.isLoggedIn()) {
+                        this.context.router.transitionTo("login");
+                    } else {
+                        currentRoute = currentRoute==="login"? "contacts" : currentRoute;
+                        this.context.router.transitionTo(currentRoute);
+                    }
+                }
+
+
             },
             componentDidMount: function() {
                 UsersStore.addChangeListener(this._changeHandler);  

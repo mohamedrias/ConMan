@@ -24,6 +24,10 @@
 
 
     var NavMenu = React.createClass({
+        contextTypes: {
+                    router: React.PropTypes.func,
+                    routeDepth: React.PropTypes.number
+        },
         componentDidMount: function() {
             document.querySelector("#mobile-nav-toggle").addEventListener("click", function(event) {
                 event.preventDefault();

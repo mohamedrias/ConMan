@@ -26,7 +26,9 @@
          * Method to update the LocalStorage
          */
         updateLocalStorage = function() {
-            localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(_currentUser));   
+            if(typeof window !== "undefined" && typeof localStorage !== "undefined") {
+                localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(_currentUser));
+            }
         },
         
         /**
@@ -34,15 +36,19 @@
          * @returns {Object} localStorage currentUser data
          */
         getLocalStorageData = function() {
-            if(localStorage.getItem(LOCALSTORAGE_KEY))
-                return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+            if(typeof window !== "undefined" && typeof localStorage !== "undefined") {
+                if(localStorage.getItem(LOCALSTORAGE_KEY))
+                    return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+            }
         },
         
         /**
          * Removes localStorage data
          */
         removeLocalStorageData = function() {
-            localStorage.removeItem(LOCALSTORAGE_KEY);  
+            if(typeof window !== "undefined" && typeof localStorage !== "undefined") {
+                localStorage.removeItem(LOCALSTORAGE_KEY);
+            }
         };
         
     
@@ -138,7 +144,7 @@
          * Used to initialize the localstorage data
          */
         init: function() {
-            if(typeof window != undefined && typeof localStorage != undefined) {
+            if(typeof window !== "undefined" && typeof localStorage !== "undefined") {
                 _currentUser = getLocalStorageData();
             }   
         }

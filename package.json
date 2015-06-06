@@ -32,6 +32,8 @@
         "koa": "*",
         "koa-router": "*",
         "koa-static": "*",
-        "koa-middlewares": "*"
+        "koa-middlewares": "*",
+        "node-jsx": "^0.12.4",
+        "koa-views": "*"
     }
 }

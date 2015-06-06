@@ -1284,6 +1284,7 @@ Content
 
 .entry-meta-category:before {
     /*content: "/";*/
+
     margin: 0 6px 0 0;
 }
 /* Entry Content */
@@ -1390,7 +1391,7 @@ Responsive CSS
         display: block;
     }
     .nav-primary-title {
-        display: none;   
+        display: none;
     }
     #site-header,
     #site-footer {
@@ -1587,7 +1588,7 @@ Responsive CSS
 }
 
 div.entry-entry {
-   float: left; 
+    float: left;
     width: 100%;
     box-sizing: border-box;
 }
@@ -1600,7 +1601,7 @@ div.entry-entry > span {
 }
 
 span.email-field {
-      white-space: nowrap;   
+    white-space: nowrap;
 }
 
 div.entry-entry > span:last-child {
@@ -1611,11 +1612,25 @@ ul.entry-footer {
     list-style: none;
     float: right;
     margin: 0px 0 4px;
-  position: absolute;
-  top: 0px;
-  right: 0px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 .about div p {
-    margin-top: 10px;   
+    margin-top: 10px;
+}
+
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.error-actions {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.error-actions .btn {
+    margin-right: 10px;
 }
