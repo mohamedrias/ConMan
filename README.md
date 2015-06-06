@@ -5,12 +5,12 @@ Contacts Manager app built using Koa and React
 1. Remove stubs and install mongodb for data persistance
 2. Use passport for OAuth based login, remove stubbed login
 3. Write BDD test cases
-4. Add About us page
+4. ~~Add About us page~~
 5. Add edit contacts page
 6. Setup stores api for removing and editing contacts
-7. Add grouping functionality in adding contacts
+7. ~~Add grouping functionality in adding contacts~~
 8. Improve search & filtering functionality
-9. Add localStorage atleast for data persistance
+9. ~~Add localStorage atleast for data persistance~~
 10. Setup registration page
 
 ## How to execute?
