@@ -130,7 +130,10 @@
             updateLocalStorage();
             return this.emitChange();
         },
-        
+
+        /**
+         * Used to initialize the localstorage data
+         */
         init: function() {
             if(typeof window != undefined && typeof localStorage != undefined) {
                 _currentUser = getLocalStorageData();

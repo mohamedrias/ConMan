@@ -1,8 +1,7 @@
+/** @jsx React.DOM */
 (function() {
     "use strict";
-    
     var React = require("react"),
-        
         AboutComponent = React.createClass({
             render: function() {
                 var header = <header id="page-header" className="clearfix">

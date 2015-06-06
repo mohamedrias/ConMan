@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 (function() {
     "use strict";
     var React = require("react"),
@@ -10,7 +11,7 @@
                 return (
                     <header id="site-header" className="clearfix" role="banner">
                         <Logo/>
-                        <Sidebar userProfile={this.props.userProfile} isAuthenticated={this.props.isAuthenticated}/>
+                        <Sidebar {...this.props}/>
                     </header>
                 );	
             }

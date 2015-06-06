@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 (function() {
    "use strict";
     
@@ -9,16 +10,20 @@
         UsersStore = require("./../../stores/users.stores"),
         LoginAction = require("./../../actions/login.action"),
         FormUtils = require("./../../utils/form.utils"),
-        ValidatorUtils = require("./../../utils/validator.utils");
+        ValidatorUtils = require("./../../utils/validator.utils"),
+        ErrorMessageHandlerMixin = require("./../mixins/errormessage.mixin");
         
     var LoginForm = React.createClass({
-        
+        mixins: [ErrorMessageHandlerMixin],
         getInitialState: function() {
             return { error: []}
         },
         contextTypes: {
             router: React.PropTypes.func
         },
+        /**
+        *   Fetch validation rules for this form from server and load
+        */
         validatorRules : function() {
             return [
               {
@@ -41,6 +46,7 @@
            
         },
         componentDidMount: function() {
+            //TODO: replace with document.querySelector
             this.refs.userName.getDOMNode().addEventListener("input", this.removeError.bind(self, 'userName'));
             this.refs.password.getDOMNode().addEventListener("input", this.removeError.bind(self, 'password'));
         },
@@ -84,16 +90,6 @@
                     this.refs.errorMessage.getDOMNode().textContent = 'Invalid Username/Password';
                 }
             }
-        },
-        addError: function(error) {
-            var errorDOM = this.refs[error.field+"-error"].getDOMNode();
-            errorDOM.textContent = error.error;
-            errorDOM.parentNode.classList.add("has-error");
-        },
-        removeError: function(ref, ele) {
-            var errorDOM = this.refs[ref+"-error"].getDOMNode();
-            errorDOM.textContent = "";
-            errorDOM.parentNode.classList.remove("has-error");
         }
     });
     

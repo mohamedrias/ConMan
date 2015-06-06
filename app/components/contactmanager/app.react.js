@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 (function() {
     "use strict";
     var React = require("react"),
@@ -26,6 +27,7 @@
                     routeDepth: React.PropTypes.func
                 },
             componentWillMount: function() {
+                // Logic to reroute to previous state if the user is logged in
                 var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
                 if(!UsersStore.isLoggedIn()) {
                     this.context.router.transitionTo("login");
