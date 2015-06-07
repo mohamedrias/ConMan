@@ -15,16 +15,17 @@ var React = require("react"),
     routes = require("./app/routes/routes");
 
 
-app.use(views('views', {
-  map: {
-    html: 'underscore'
-  }
-}));
 
 
 /**
 *   Load all middlewares Here
 */
+app.use(middlewares.bodyParser());
+app.use(views('views', {
+  map: {
+    html: 'underscore'
+  }
+}));
 app.use(serve(__dirname + "/public"));
 app.use(middlewares.router(app));
 
@@ -48,6 +49,10 @@ app.use(function* (next) {
     yield next;   
 })
 
+app.post("/api/login", function* (next) {
+    this.body = this.request.body;
+});
+
 /**
 *   Route starts here
 */
@@ -60,3 +65,4 @@ app.use(function* (next) {
 });
 
 var server = app.listen(3000);
+console.log("server running at port 3000");

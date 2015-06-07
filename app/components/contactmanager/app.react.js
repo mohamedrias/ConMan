@@ -30,7 +30,18 @@
                     routeDepth: React.PropTypes.number
                 },
             componentWillMount: function() {
-               
+               if(typeof window !== "undefined") {
+                    // Logic to reroute to previous state if the user is logged in
+                    if(this.context.router) {
+                        var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
+                        if(!UsersStore.isLoggedIn()) {
+                            this.context.router.transitionTo("login");
+                        } else {
+                            currentRoute = currentRoute==="login"? "contacts" : currentRoute;
+                            this.context.router.transitionTo(currentRoute);
+                        }
+                    }   
+               }
 
             },
             componentDidMount: function() {
@@ -45,16 +56,7 @@
                     };
                 }
 
-                // Logic to reroute to previous state if the user is logged in
-                if(this.context.router) {
-                    var currentRoute =  this.context.router.getRouteAtDepth(this.context.routeDepth).name || "contacts";
-                    if(!UsersStore.isLoggedIn()) {
-                        this.context.router.transitionTo("login");
-                    } else {
-                        currentRoute = currentRoute==="login"? "contacts" : currentRoute;
-                        this.context.router.transitionTo(currentRoute);
-                    }
-                }
+                
 
             },
             componentWillUnmount: function() {

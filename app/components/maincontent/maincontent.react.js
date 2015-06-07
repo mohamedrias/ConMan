@@ -18,13 +18,15 @@
             },
 
             componentWillMount: function () {
-               
+               if(typeof window !== "undefined") {
+                 if (!this.props.isAuthenticated) {
+                    this.context.router.transitionTo("login");
+                 }   
+               }
             },
             componentDidMount: function () {
                 //TODO: Add logic to bind events
-                 if (!this.props.isAuthenticated) {
-                    this.context.router.transitionTo("login");
-                }
+                
             },
             render: function () {
               return (
