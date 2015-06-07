@@ -30,7 +30,12 @@
                     routeDepth: React.PropTypes.number
                 },
             componentWillMount: function() {
-                var self = this;
+               
+
+            },
+            componentDidMount: function() {
+                UsersStore.addChangeListener(this._changeHandler);  
+                 var self = this;
                 /**
                  * Universal Error handler for the app
                  */
@@ -51,10 +56,6 @@
                     }
                 }
 
-
-            },
-            componentDidMount: function() {
-                UsersStore.addChangeListener(this._changeHandler);  
             },
             componentWillUnmount: function() {
                 UsersStore.removeChangeListener(this._changeHandler);  

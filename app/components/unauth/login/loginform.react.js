@@ -1,17 +1,16 @@
-/** @jsx React.DOM */
 (function() {
-   "use strict";
+    "use strict";
     
     var React = require("react"),
         Router = require("react-router"),
         Route = Router.Route,
         Link = Router.Link,
-        LoginActionHandler = require("./../../actions/login.action"),
-        UsersStore = require("./../../stores/users.stores"),
-        LoginAction = require("./../../actions/login.action"),
-        FormUtils = require("./../../utils/form.utils"),
-        ValidatorUtils = require("./../../utils/validator.utils"),
-        ErrorMessageHandlerMixin = require("./../mixins/errormessage.mixin");
+        LoginActionHandler = require("./../../../actions/login.action"),
+        UsersStore = require("./../../../stores/users.stores"),
+        LoginAction = require("./../../../actions/login.action"),
+        FormUtils = require("./../../../utils/form.utils"),
+        ValidatorUtils = require("./../../../utils/validator.utils"),
+        ErrorMessageHandlerMixin = require("./../../mixins/errormessage.mixin");
         
     var LoginForm = React.createClass({
         mixins: [ErrorMessageHandlerMixin],
@@ -60,7 +59,7 @@
             return (
                 
                 <div id="content" className="animated fadeInUp">
-                    <form onSubmit={this.login} ref="loginForm">
+                    <form action="/api/login" method="POST" onSubmit={this.login} ref="loginForm">
                         <div className="form-horizontal">
                           {FormUtils.renderTextInput('userName', 'username')}
                           {FormUtils.renderPasswordInput('password', 'password')}
@@ -98,30 +97,5 @@
             }
         }
     });
-    
-    var Login = React.createClass({
-        contextTypes: {
-            router: React.PropTypes.func
-        },
-        componentWillMount: function() {
-            if(this.props.isAuthenticated){
-                this.context.router.transitionTo("contacts");   
-            }
-        },
-        render: function() {
-        var header = <header id="page-header" className="clearfix">
-                <div className="container">
-                    <h2>Login</h2>
-                </div>
-            </header>;
-        return (
-                <section id="primary" className="clearfix ">
-                    {header}
-                    <LoginForm/>
-                </section>
-            );   
-        }
-        
-    });
-    module.exports = Login;
+    module.exports = LoginForm;
 })();

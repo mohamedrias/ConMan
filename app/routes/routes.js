@@ -12,7 +12,7 @@
         ConMan = require('./../components/contactmanager/app.react'),
         MainContent = require('./../components/maincontent/maincontent.react'),
         AddContact = require("./../components/addcontact/addcontact.react"),
-        Login = require("./../components/unauth/login.react"),
+        Login = require("./../components/unauth/login/login.react"),
         About = require("./../components/unauth/about.react"),
         NotFound = require("./../components/misc/404.react");
 

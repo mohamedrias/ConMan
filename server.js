@@ -3,21 +3,24 @@ var koa = require("koa"),
     middlewares = require("koa-middlewares"),
     app = module.exports = koa(),
     serve = require("koa-static"),
-    views = require("koa-views");
+    views = require("koa-views"),
+    Q = require("q");
 
-require('node-jsx').install();
+    require('node-jsx').install();
 
 var React = require("react"),
     Router = require("react-router"),
     UserStores = require("./app/stores/users.stores"),
     loginAction = require("./app/actions/login.action"),
-    AppComponent = React.createFactory(require("./app/components/unauth/login.react"));
-    
+    routes = require("./app/routes/routes");
+
+
 app.use(views('views', {
   map: {
     html: 'underscore'
   }
 }));
+
 
 /**
 *   Load all middlewares Here
@@ -27,30 +30,33 @@ app.use(middlewares.router(app));
 
 
 /**
-*   App specific filtering/Authentication logic here
+*   Converting the Router.run method to return a promise
+*/
+function getRouteContent(url) {
+    var deferred = Q.defer();
+    Router.run(routes, url , function(Handler, routerState) {
+        var handlerElement = React.createElement(Handler);
+        var html = React.renderToString(handlerElement);
+        return deferred.resolve(html);
+    });
+    return deferred.promise;
+}
+
+
+app.use(function* (next) {
+    //TODO: Add CORS filter or check headers before proceeding
+    yield next;   
+})
+
+/**
+*   Route starts here
 */
 app.use(function* (next) {
-    //TODO: Add filter
-    yield next;
-});
-
-
-var routes = require("./app/routes/routes");
-app.get("/testing", function* () {
-    // Just playing around to see Dispatcher for SERVER_ACTION
-    //loginAction.login("mohamedrias", "baba");
-    var self = this;
-    Router.run(routes, function(Handler, routerState) {
-        console.log( routerState);
-        var html = React.renderToStaticMarkup(React.createElement(Handler));
-        console.log(html);
-    });
-    var markup = React.renderToString(AppComponent());
-    yield this.render('index', {
-        reactapp: markup
+    //TODO: Check if it's one of the react routes
+    var promise = yield getRouteContent(this.req.url);
+    yield this.render('index',  {
+        reactapp : promise
     });
 });
 
-var server = app.listen(3000, function* () {
-    console.log("connection is established");
-});
+var server = app.listen(3000);
